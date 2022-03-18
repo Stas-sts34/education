@@ -19,7 +19,7 @@ dict = {}
 #     product.append(tuple)
 
 product = [(1, {'название': 'q', 'цена': 2, 'количество': 2, 'eд': 'q'}), (2, {'название': 'w', 'цена': 2, 'количество': 2, 'eд': 'w'})]
-total_dict = {}
+total_dict = {name for name in product}
 total_list = []
 for i in product:
     # total_dict['название'] = [name for name in i[1]['название']]
