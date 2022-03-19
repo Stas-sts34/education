@@ -8,23 +8,21 @@
 этих чисел к полученной ранее сумме и после этого завершить программу.
 '''
 
-def func_count(list_numbers):
-    ''' вычисляет сумму цифр из полученного списка'''
-    return sum([int(item) for item in list_numbers])
 
-result = '0'
-while True:
+result = 0
+end_sum = False
+while not end_sum:
     numbers = input('Введите числа через пробел\n')
     list_numbers = numbers.split()          # преобразуем список из строки без пробелов
+    for number in list_numbers:
+        if number == 'x':
+            end_sum = True
+            break
 
-    if 'x' in list_numbers:         # проверяем на налииче спец символа
-        indx = list_numbers.index('x')
-        del list_numbers[indx:]
-        list_numbers.append(result)
-        result = func_count(list_numbers)
-        print('сумма:', result)
-        print('exit')
-        break
-    list_numbers.append(result)
-    result = func_count(list_numbers)
-    print('сумма:', result)
+        try:
+            num = int(number)
+        except ValueError:
+            continue
+        result += num
+    print(result)
+
