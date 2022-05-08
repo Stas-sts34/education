@@ -28,17 +28,19 @@ class Warehouse:
 
         }
 
-    def add_product(self, product, count):            # метод добавление/оприходывание товара на склад
-        if self._warehouse.get(product.name) == None:
-            self._warehouse[product.name] = int(count)
+    def add_product(self, product, count: int):            # метод добавление/оприходывание товара на склад
+        count = int(count)
+        if not self._warehouse.get(product.name):
+            self._warehouse[product.name] = count
             return self._warehouse
         else:
-            self._warehouse[product.name] += int(count)
+            self._warehouse[product.name] += count
             return self._warehouse
 
     def give_from_warehouse(self, other, product, count):       # метод перемещение товаров со склада на склад
+        count = int(count)
         try:
-            result = self._warehouse[product.name] - int(count)
+            result = self._warehouse[product.name] - count
             if result < 0:
                 print('невозможно выгрузить больше, чем есть на складе')
             else:
@@ -50,11 +52,11 @@ class Warehouse:
 
 
     def get_warehouse(self):
-        return self.__dict__            # можно ли так возвращать словарь?
+        return self._warehouse            # можно ли так возвращать словарь?
 
 
 
-class Office_equipment:
+class OfficeEquipment:
 
     def __init__(self, name, price):
         self.name = name
@@ -81,33 +83,54 @@ class Office_equipment:
         self.price = price
 
 
-class Printer(Office_equipment):
+class Printer(OfficeEquipment):
+    def __init__(self, name, price, speed):
+        super().__init__(name, price)
+        self.speed = speed
+
+    def __str__(self):
+        return f'{self.name, self.price, self.speed}'
+
     def printer_speed(self, speed):
         self.speed = speed
         # self.item['скорость печати'] = self.speed
-        return self.speed
+        # return self.speed
 
 
-class Scanner(Office_equipment):
+class Scanner(OfficeEquipment):
+    def __init__(self, name, price, speed):
+        super().__init__(name, price)
+        self.speed = speed
+
+    def __str__(self):
+        return f'{self.name, self.price, self.speed}'
+
     def scanner_speed(self, speed):
         self.speed = speed
         # self.item['скорость сканирования'] = self.speed
-        return self.speed
+        # return self.speed
 
 
-class Xerox(Office_equipment):
+class Xerox(OfficeEquipment):
+    def __init__(self, name, price, speed):
+        super().__init__(name, price)
+        self.speed = speed
+
+    def __str__(self):
+        return f'{self.name, self.price, self.speed}'
+
     def xerox_speed(self, speed):
         self.speed = speed
         # self.item['скорость копирования'] = self.speed
-        return self.speed
+        # return self.speed
 
 
-p = Printer('hp', 125)
-s = Scanner('canon', 300)
-p.printer_speed(5)      # устанавливаем свойство скорости печати
+p = Printer('hp', 125, 5)
+s = Scanner('canon', 300, 5)
+p.printer_speed(6)      # устанавливаем свойство скорости печати
 p.set_price = 100         # устанавливаем цену
 p.price = 99    # по другому устанавливаем цену ( как вариант так можно? )
-x=Xerox('sams', 200)
+x=Xerox('sams', 200, 5)
 print('товар ', p, s, x)
 
 
@@ -118,6 +141,7 @@ skl = Warehouse('коммерч')              # создаем склад 2
 warehouse.add_product(p, 12)   # добавляем товар и кол-во
 warehouse.add_product(s, 5)
 warehouse.add_product(x, 1)
+print(warehouse.get_warehouse())
 # print(warehouse.__dict__)
 warehouse.add_product(s, 10)   # добавляем товар и кол-во
 print(warehouse.get_warehouse())
